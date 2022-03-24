@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_sepatu/bindings/auth_bindings.dart';
+import 'package:pos_sepatu/bindings/produk_bindings.dart';
 import 'package:pos_sepatu/config/tema.dart';
 import 'package:pos_sepatu/view/auth/login.dart';
+import 'package:pos_sepatu/view/produk/sepatu_list.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting();
   runApp(const MyApp());
 }
 
@@ -15,10 +20,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding: AuthBindings(),
+      debugShowCheckedModeBanner: false,
+      initialBinding: ProdukBindings(),
       title: 'Flutter Demo',
       theme: tema,
-      home: LoginView(),
+      home: SepatuListView(),
     );
   }
 }
