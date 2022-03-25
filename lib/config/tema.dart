@@ -37,6 +37,18 @@ Color getWarnaSepatu(String warna) {
   }
 }
 
+ButtonStyle borderButton = ButtonStyle(
+  backgroundColor: MaterialStateProperty.all(Colors.white),
+  textStyle: MaterialStateProperty.all(TextStyle(
+    color: primaryColor,
+  )),
+  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: primaryColor)),
+  ),
+);
+
 ThemeData tema = ThemeData(
   brightness: Brightness.light,
   primaryColor: primaryColor,

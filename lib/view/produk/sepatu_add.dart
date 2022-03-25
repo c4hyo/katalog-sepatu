@@ -5,6 +5,8 @@ import 'package:pos_sepatu/config/tema.dart';
 import 'package:pos_sepatu/controller/produk_controlller.dart';
 import 'package:pos_sepatu/model/sepatu.dart';
 
+import '../../controller/home_controller.dart';
+
 class SepatuAddView extends GetView<ProdukController> {
   final merk = TextEditingController();
   final harga = TextEditingController();
@@ -15,6 +17,7 @@ class SepatuAddView extends GetView<ProdukController> {
   final warna = TextEditingController();
   final deskripsi = TextEditingController();
   final stok = TextEditingController();
+  final homeC = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class SepatuAddView extends GetView<ProdukController> {
                 warna: warna.text.toLowerCase(),
               );
               // parameter SepatuModel, datanya sepatuModel
-              controller.addSepatu(sepatuModel);
+              homeC.addSepatu(sepatuModel);
               Get.back();
             },
             icon: Icon(Icons.save),

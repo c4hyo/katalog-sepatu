@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_sepatu/controller/produk_controlller.dart';
 
-import '../../config/helper.dart';
 import '../../config/tema.dart';
+import '../../controller/home_controller.dart';
 import '../../model/sepatu.dart';
 
 class SepatuUpdateView extends GetView<ProdukController> {
@@ -16,6 +16,7 @@ class SepatuUpdateView extends GetView<ProdukController> {
   final warna = TextEditingController();
   final deskripsi = TextEditingController();
   final stok = TextEditingController();
+  final homeC = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class SepatuUpdateView extends GetView<ProdukController> {
         actions: [
           IconButton(
             onPressed: () {
-              final index = controller.listSepatu.indexWhere((element) =>
+              final index = homeC.listSepatu.indexWhere((element) =>
                   element.sepatuId == controller.detailSepatu.value.sepatuId);
               // penamaan variabel lowercase atau camelcase
               final sepatuModel = SepatuModel(
@@ -48,8 +49,11 @@ class SepatuUpdateView extends GetView<ProdukController> {
                 ukuran: int.parse(ukuran.text),
                 warna: warna.text.toLowerCase(),
               );
+              // update data sepatumodel di homecontroller
+              homeC.updateListSepatu(sepatuModel, index);
               // parameter SepatuModel, datanya sepatuModel
-              controller.updateSepatu(sepatuModel, index);
+              // update data detail di produkcontroller
+              controller.updateSepatu(sepatuModel);
               Get.back();
             },
             icon: Icon(Icons.save),

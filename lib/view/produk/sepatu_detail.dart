@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:pos_sepatu/bindings/produk_bindings.dart';
 import 'package:pos_sepatu/config/helper.dart';
 import 'package:pos_sepatu/config/tema.dart';
+import 'package:pos_sepatu/controller/home_controller.dart';
 import 'package:pos_sepatu/controller/produk_controlller.dart';
 import 'package:pos_sepatu/view/produk/sepatu_update.dart';
 
 class SepatuDetailView extends GetView<ProdukController> {
+  final homeC = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +16,9 @@ class SepatuDetailView extends GetView<ProdukController> {
         actions: [
           IconButton(
             onPressed: () {
-              final index = controller.listSepatu.indexWhere((element) =>
+              final index = homeC.listSepatu.indexWhere((element) =>
                   element.sepatuId == controller.detailSepatu.value.sepatuId);
-              controller.deleteSepatu(index);
+              homeC.deleteSepatu(index);
               Get.back();
             },
             icon: Icon(

@@ -5,9 +5,15 @@ import 'package:pos_sepatu/config/helper.dart';
 import 'package:pos_sepatu/config/tema.dart';
 import 'package:pos_sepatu/controller/produk_controlller.dart';
 import 'package:pos_sepatu/model/sepatu.dart';
+import 'package:pos_sepatu/model/transaksi.dart';
 import 'package:pos_sepatu/view/produk/sepatu_add.dart';
 
+import '../../bindings/transaksi_bindings.dart';
+import '../../controller/home_controller.dart';
+import '../transaksi/transaksi_view.dart';
+
 class SepatuListView extends GetView<ProdukController> {
+  final homeC = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +72,7 @@ class SepatuListView extends GetView<ProdukController> {
               children: [
                 GridView.builder(
                   // banyak item yang ditampilkan
-                  itemCount: controller.listSepatu.length,
+                  itemCount: homeC.listSepatu.length,
                   // content dari grid panjangnya menyesuaikan banyak item
                   shrinkWrap: true,
                   // jenis scroll dari android
@@ -83,7 +89,7 @@ class SepatuListView extends GetView<ProdukController> {
                     childAspectRatio: 0.75,
                   ),
                   itemBuilder: (_, i) {
-                    SepatuModel sm = controller.listSepatu[i];
+                    SepatuModel sm = homeC.listSepatu[i];
                     return InkWell(
                       onTap: () {
                         controller.goDetailSepatu(sm);
@@ -102,8 +108,26 @@ class SepatuListView extends GetView<ProdukController> {
                                   Text(
                                     rupiah(sm.harga!),
                                   ),
-                                  Icon(
-                                    Icons.add_shopping_cart,
+                                  IconButton(
+                                    onPressed: () {
+                                      ProdukTransaksiModel ptm =
+                                          ProdukTransaksiModel(
+                                        hargaAsli: sm.harga,
+                                        hargaTotal: sm.harga,
+                                        produkId: sm.sepatuId,
+                                        qty: 1,
+                                      );
+                                      final index = homeC.keranjang.indexWhere(
+                                          (element) =>
+                                              element.produkId == sm.sepatuId);
+
+                                      homeC.addKeranjang(ptm, index);
+                                      Get.to(
+                                        TransaksiView(),
+                                        binding: TransaksiBindings(),
+                                      );
+                                    },
+                                    icon: Icon(Icons.add_shopping_cart),
                                   ),
                                 ],
                               ),
